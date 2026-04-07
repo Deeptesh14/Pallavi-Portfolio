@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pallavi Balmiki — Marketing Strategist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:  #0B1F3B;
+      --bg:    #F7F7F7;
+      --teal:  #3A7D7C;
+      --beige: #E8E1D9;
+      --white: #ffffff;
+      --text:  #1a1a2e;
+      --muted: #6b7280;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ───────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 5%;
+      background: rgba(247,247,247,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--beige);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(11,31,59,.08); }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700; font-size: 1.15rem;
+      color: var(--navy); letter-spacing: -.3px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: .85rem; font-weight: 500;
+      color: var(--navy); letter-spacing: .3px;
+      position: relative; transition: color .2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1.5px;
+      background: var(--teal); transition: width .25s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a:hover::after { width: 100%; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); transition: .3s; }
+
+    /* ── HERO ─────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 7rem 5% 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 60% 50% at 80% 50%, rgba(58,125,124,.08) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 60% at 10% 80%, rgba(232,225,217,.5) 0%, transparent 60%);
+    }
+    .hero-blob {
+      position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+      width: 520px; height: 520px; border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+      background: linear-gradient(135deg, rgba(58,125,124,.12), rgba(11,31,59,.06));
+      animation: blobFloat 8s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+    @keyframes blobFloat {
+      0%   { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; transform: translateY(-50%) rotate(0deg); }
+      100% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: translateY(-52%) rotate(3deg); }
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .78rem; font-weight: 600; letter-spacing: 1.8px;
+      color: var(--teal); text-transform: uppercase; margin-bottom: 1.4rem;
+      opacity: 0; animation: fadeUp .7s .2s forwards;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 1.5px; background: var(--teal);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      line-height: 1.12; font-weight: 900;
+      color: var(--navy); margin-bottom: 1.4rem;
+      opacity: 0; animation: fadeUp .7s .35s forwards;
+    }
+    h1 em { color: var(--teal); font-style: normal; }
+    .hero-sub {
+      font-size: 1.05rem; line-height: 1.75; color: #4b5563;
+      max-width: 520px; margin-bottom: 2.2rem;
+      opacity: 0; animation: fadeUp .7s .5s forwards;
+    }
+    .hero-ctas {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .7s .65s forwards;
+    }
+    .btn-primary {
+      background: var(--navy); color: var(--white);
+      padding: .85rem 2rem; border-radius: 6px;
+      text-decoration: none; font-weight: 600; font-size: .9rem;
+      letter-spacing: .2px; transition: background .2s, transform .2s;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-primary:hover { background: var(--teal); transform: translateY(-2px); }
+    .btn-secondary {
+      border: 1.5px solid var(--navy); color: var(--navy);
+      padding: .85rem 2rem; border-radius: 6px;
+      text-decoration: none; font-weight: 600; font-size: .9rem;
+      transition: border-color .2s, color .2s, transform .2s;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-secondary:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── CREDIBILITY STRIP ────────────────────────── */
+    #cred {
+      background: var(--navy);
+      padding: 1.6rem 5%;
+      display: flex; align-items: center; justify-content: center;
+      gap: 3rem; flex-wrap: wrap;
+    }
+    .cred-item {
+      display: flex; align-items: center; gap: .7rem;
+      color: rgba(255,255,255,.8); font-size: .82rem;
+      font-weight: 500; letter-spacing: .3px;
+    }
+    .cred-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+
+    /* ── SECTION LAYOUT ───────────────────────────── */
+    section { padding: 5.5rem 5%; }
+    .section-label {
+      font-size: .72rem; font-weight: 600; letter-spacing: 2px;
+      color: var(--teal); text-transform: uppercase; margin-bottom: .8rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .section-label::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--teal); }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 700; color: var(--navy); margin-bottom: .9rem; line-height: 1.2;
+    }
+    h3 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 1.35rem; margin-bottom: .5rem; }
+    p { line-height: 1.78; color: #4b5563; }
+
+    /* ── ABOUT ────────────────────────────────────── */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1100px; }
+    .about-text p { margin-bottom: 1.1rem; }
+    .about-mindset {
+      background: var(--bg); border-radius: 16px; padding: 2.2rem;
+      border-left: 3px solid var(--teal);
+    }
+    .mindset-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+      margin-bottom: 1.4rem; padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--beige);
+    }
+    .mindset-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .mindset-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--navy); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; flex-shrink: 0; margin-top: .1rem;
+    }
+    .mindset-text strong { display: block; color: var(--navy); font-size: .9rem; margin-bottom: .2rem; }
+    .mindset-text span { font-size: .83rem; color: var(--muted); }
+
+    /* ── WORK ─────────────────────────────────────── */
+    #work { background: var(--bg); }
+    .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.6rem; margin-top: 2.5rem; }
+    .work-card {
+      background: var(--white); border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--beige); transition: transform .25s, box-shadow .25s;
+      display: flex; flex-direction: column;
+    }
+    .work-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(11,31,59,.1); }
+    .card-accent { height: 4px; }
+    .card-body { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
+    .card-tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .tag {
+      font-size: .7rem; font-weight: 600; letter-spacing: .8px;
+      text-transform: uppercase; padding: .25rem .7rem; border-radius: 20px;
+    }
+    .tag-strategy { background: rgba(11,31,59,.08); color: var(--navy); }
+    .tag-content  { background: rgba(58,125,124,.1); color: var(--teal); }
+    .tag-exec     { background: rgba(232,225,217,.7); color: #5a4a3a; }
+    .card-body h3 { font-size: 1.2rem; margin-bottom: .6rem; }
+    .card-body p  { font-size: .88rem; margin-bottom: 1.4rem; flex: 1; }
+    .card-link {
+      text-decoration: none; font-size: .83rem; font-weight: 600;
+      color: var(--teal); display: inline-flex; align-items: center; gap: .35rem;
+      transition: gap .2s;
+    }
+    .card-link:hover { gap: .6rem; }
+    .card-link::after { content: '→'; }
+
+    /* ── CASE STUDY SECTION ───────────────────────── */
+    .case-study { background: var(--white); }
+    .case-study:nth-of-type(odd) { background: var(--bg); }
+    .cs-header { margin-bottom: 3rem; }
+    .cs-brand {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--teal); margin-bottom: .5rem;
+    }
+    .cs-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+    .cs-block {
+      background: var(--bg); border-radius: 12px; padding: 1.6rem;
+      border-top: 3px solid var(--beige);
+    }
+    .case-study .cs-block:hover { border-top-color: var(--teal); }
+    .cs-block h4 {
+      font-size: .7rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--teal); margin-bottom: .7rem;
+    }
+    .cs-block p, .cs-block li { font-size: .88rem; line-height: 1.7; }
+    .cs-block ul { padding-left: 1.2rem; color: #4b5563; }
+    .cs-block li { margin-bottom: .4rem; }
+    .cs-metrics { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1.5rem 0; }
+    .metric {
+      background: var(--navy); color: var(--white);
+      border-radius: 10px; padding: 1.2rem 1.6rem; text-align: center;
+    }
+    .metric-val { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--teal); }
+    .metric-label { font-size: .72rem; letter-spacing: .5px; color: rgba(255,255,255,.7); margin-top: .2rem; }
+    .view-doc-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--navy); color: var(--white);
+      padding: .75rem 1.6rem; border-radius: 6px; text-decoration: none;
+      font-size: .85rem; font-weight: 600; transition: background .2s, transform .2s;
+      margin-top: 1rem;
+    }
+    .view-doc-btn:hover { background: var(--teal); transform: translateY(-2px); }
+
+    /* ── DRISHTI ──────────────────────────────────── */
+    #drishti { background: var(--navy); color: var(--white); }
+    #drishti .section-label { color: var(--teal); }
+    #drishti h2 { color: var(--white); }
+    #drishti p { color: rgba(255,255,255,.7); }
+    .drishti-grid-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 2.5rem; }
+    .drishti-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+    .d-stat {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; padding: 1.2rem; text-align: center;
+    }
+    .d-stat-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--teal); }
+    .d-stat-label { font-size: .75rem; color: rgba(255,255,255,.6); margin-top: .3rem; }
+    .drishti-img-frame {
+      border-radius: 16px; overflow: hidden;
+      border: 2px solid rgba(255,255,255,.1);
+      box-shadow: 0 24px 60px rgba(0,0,0,.4);
+    }
+    .drishti-img-frame img { width: 100%; display: block; }
+
+    /* ── SKILLS ───────────────────────────────────── */
+    #skills { background: var(--white); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
+    .skill-card {
+      border: 1px solid var(--beige); border-radius: 12px; padding: 1.5rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .skill-card:hover { border-color: var(--teal); transform: translateY(-3px); }
+    .skill-cat {
+      font-size: .68rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--teal); margin-bottom: .6rem;
+    }
+    .skill-statement { font-size: .9rem; font-weight: 500; color: var(--navy); line-height: 1.5; margin-bottom: .5rem; }
+    .skill-proof { font-size: .8rem; color: var(--muted); }
+
+    /* ── SIDE QUESTS ──────────────────────────────── */
+    #sidequests { background: var(--bg); }
+    .sq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; margin-top: 2rem; }
+    .sq-card {
+      background: var(--white); border-radius: 14px; padding: 2rem;
+      border: 1px solid var(--beige); transition: transform .25s, box-shadow .25s;
+      position: relative; overflow: hidden;
+    }
+    .sq-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+    }
+    .sq-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(11,31,59,.08); }
+    .sq-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .sq-card h3 { margin-bottom: .6rem; font-size: 1.1rem; }
+    .sq-card p { font-size: .86rem; margin-bottom: 1.2rem; }
+
+    /* ── THINKING LAB ─────────────────────────────── */
+    #thinking { background: var(--white); }
+    .tl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; margin-top: 2rem; }
+    .tl-card {
+      border: 1px solid var(--beige); border-radius: 12px; padding: 1.6rem;
+      transition: border-color .2s;
+    }
+    .tl-card:hover { border-color: var(--teal); }
+    .tl-tag { font-size: .68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--teal); margin-bottom: .6rem; }
+    .tl-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); margin-bottom: .5rem; }
+    .tl-card p { font-size: .84rem; }
+
+    /* ── RESUME ───────────────────────────────────── */
+    #resume { background: var(--beige); text-align: center; }
+    .resume-inner { max-width: 560px; margin: 0 auto; }
+    .resume-inner p { margin-bottom: 2rem; }
+
+    /* ── FINAL CTA ────────────────────────────────── */
+    #contact {
+      background: var(--navy); color: var(--white); text-align: center;
+      padding: 6rem 5%;
+    }
+    #contact h2 { color: var(--white); margin-bottom: 1rem; }
+    #contact p { color: rgba(255,255,255,.7); max-width: 480px; margin: 0 auto 2.5rem; }
+    .contact-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-teal {
+      background: var(--teal); color: var(--white);
+      padding: .85rem 2rem; border-radius: 6px;
+      text-decoration: none; font-weight: 600; font-size: .9rem;
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-teal:hover { opacity: .85; transform: translateY(-2px); }
+    .btn-outline-white {
+      border: 1.5px solid rgba(255,255,255,.4); color: var(--white);
+      padding: .85rem 2rem; border-radius: 6px;
+      text-decoration: none; font-weight: 600; font-size: .9rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .btn-outline-white:hover { border-color: var(--white); transform: translateY(-2px); }
+    .contact-info {
+      margin-top: 3rem; display: flex; justify-content: center; gap: 2rem;
+      flex-wrap: wrap; color: rgba(255,255,255,.5); font-size: .85rem;
+    }
+    .contact-info a { color: rgba(255,255,255,.6); text-decoration: none; transition: color .2s; }
+    .contact-info a:hover { color: var(--teal); }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer {
+      background: #070f1e; color: rgba(255,255,255,.3);
+      text-align: center; padding: 1.5rem; font-size: .78rem;
+    }
+
+    /* ── DIVIDER ──────────────────────────────────── */
+    .divider { height: 1px; background: var(--beige); max-width: 1100px; margin: 0 auto; }
+
+    /* ── SCROLL REVEAL ────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ───────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); padding: 1.5rem 5%; gap: 1.2rem; border-bottom: 1px solid var(--beige); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .about-grid, .cs-flow, .drishti-grid-wrap, .sq-grid { grid-template-columns: 1fr; gap: 2rem; }
+      #cred { gap: 1.2rem; }
+      .cs-metrics { gap: .8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ──────────────────────────────────────── -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Pallavi<span>.</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#thinking">Thinking</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#sidequests">Side Quests</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-blob"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Marketing Strategist · Mumbai</div>
+    <h1>Strategy that<br><em>makes people act.</em></h1>
+    <p class="hero-sub">
+      I build marketing that earns attention — through sharp positioning, structured content, and creative that respects the audience's intelligence. Not aesthetics for aesthetics' sake. Purpose behind every decision.
+    </p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">View My Work</a>
+      <a href="assets/resume.pdf" download class="btn-secondary">Download Resume</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CREDIBILITY STRIP ────────────────────────────── -->
+<div id="cred">
+  <div class="cred-item"><span class="cred-dot"></span>Digital Strategy</div>
+  <div class="cred-item"><span class="cred-dot"></span>Content Architecture</div>
+  <div class="cred-item"><span class="cred-dot"></span>Campaign Execution</div>
+  <div class="cred-item"><span class="cred-dot"></span>Analytics-Led Decisions</div>
+  <div class="cred-item"><span class="cred-dot"></span>Brand Consistency</div>
+  <div class="cred-item"><span class="cred-dot"></span>Audience Understanding</div>
+</div>
+
+<!-- ── ABOUT ────────────────────────────────────────── -->
+<section id="about">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-label">How I Think</div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <h2>Strategy first.<br>Always.</h2>
+        <p>I don't start with content. I start with the question: <em>what do we actually want this person to do, feel, or believe?</em> Everything else — format, copy, cadence — follows that answer.</p>
+        <p>Across brand strategy, social execution, and content planning, I've found that most marketing underperforms not because of bad creative, but because nobody agreed on the problem first.</p>
+        <p>My approach combines structured thinking with creative execution — I map the logic before I make the work. That's what I bring to every brief.</p>
+      </div>
+      <div class="about-mindset reveal">
+        <div class="mindset-row">
+          <div class="mindset-icon">🎯</div>
+          <div class="mindset-text">
+            <strong>Audience Before Aesthetics</strong>
+            <span>Understand who you're talking to. Then decide how to say it.</span>
+          </div>
+        </div>
+        <div class="mindset-row">
+          <div class="mindset-icon">🏗️</div>
+          <div class="mindset-text">
+            <strong>Structure Carries the Story</strong>
+            <span>A campaign without structure is just noise. I build the skeleton before the skin.</span>
+          </div>
+        </div>
+        <div class="mindset-row">
+          <div class="mindset-icon">📊</div>
+          <div class="mindset-text">
+            <strong>Data Sharpens Instinct</strong>
+            <span>Analytics aren't the answer — they sharpen the right questions.</span>
+          </div>
+        </div>
+        <div class="mindset-row">
+          <div class="mindset-icon">✏️</div>
+          <div class="mindset-text">
+            <strong>Clarity Over Cleverness</strong>
+            <span>If it needs explaining, it doesn't work. I make it obvious.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED WORK ─────────────────────────────────── -->
+<section id="work">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-label">Featured Work</div>
+    <h2>Projects that moved <em style="color:var(--teal)">something</em>.</h2>
+    <div class="work-grid">
+
+      <div class="work-card reveal">
+        <div class="card-accent" style="background:var(--teal)"></div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-strategy">Strategy</span>
+            <span class="tag tag-exec">Marketing Plan</span>
+          </div>
+          <h3>Naturals NOW — 90-Day Launch Strategy</h3>
+          <p>Developed a full go-to-market plan for Mumbai's first live-churning artisanal ice cream experience in Juhu — covering positioning, content pillars, events, influencer tiers, and brand rituals.</p>
+          <a href="#naturals" class="card-link">View Case Study</a>
+        </div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="card-accent" style="background:var(--navy)"></div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-content">Content</span>
+            <span class="tag tag-strategy">Platform Strategy</span>
+          </div>
+          <h3>EDT — Social Media Strategy</h3>
+          <p>Crafted a complete social strategy for a premium Indian kitchen appliance brand — 5 original content buckets, 5 creator partnerships, 3 founder narrative themes. Built to make the brand feel like a cultural movement, not an appliance company.</p>
+          <a href="#edt" class="card-link">View Case Study</a>
+        </div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="card-accent" style="background:#c8a04a"></div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-exec">Execution</span>
+            <span class="tag tag-content">Social Media</span>
+          </div>
+          <h3>Drishti Fest — Instagram Execution</h3>
+          <p>Led the end-to-end Instagram presence for Drishti, LLDC's annual college festival. One reel hit 98.9K views. Built and maintained the grid aesthetic, reel strategy, and community engagement from scratch.</p>
+          <a href="#drishti" class="card-link">See the Work</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CASE STUDY: NATURALS NOW ──────────────────────── -->
+<section id="naturals" class="case-study" style="background:var(--white);">
+  <div style="max-width:1100px; margin:0 auto;">
+    <span class="cs-brand">Case Study 01</span>
+    <h2>Naturals NOW — 90-Day Marketing Plan</h2>
+    <p style="max-width:600px; margin-bottom:2rem;">How do you launch Mumbai's only live-churning artisanal ice cream store and make the experience — not just the product — the point?</p>
+
+    <div class="cs-metrics">
+      <div class="metric"><div class="metric-val">90</div><div class="metric-label">Day Plan</div></div>
+      <div class="metric"><div class="metric-val">+3K</div><div class="metric-label">Target Followers</div></div>
+      <div class="metric"><div class="metric-val">100+</div><div class="metric-label">UGC Posts Projected</div></div>
+      <div class="metric"><div class="metric-val">5–8</div><div class="metric-label">PR Features Targeted</div></div>
+    </div>
+
+    <div class="cs-flow reveal">
+      <div class="cs-block">
+        <h4>The Problem</h4>
+        <p>Naturals NOW had a genuinely differentiated experience — live churning, botanical ambience, rotating menu. But experiential stores often fail to translate the IRL moment into lasting digital equity. The launch needed to make <em>theatre</em> the product.</p>
+      </div>
+      <div class="cs-block">
+        <h4>The Insight</h4>
+        <p>Mumbaikars don't just want good dessert. They want a shareable story. The live churning wasn't just a process — it was the content. Position it as Mumbai's most watchable food ritual, not just its freshest scoop.</p>
+      </div>
+      <div class="cs-block">
+        <h4>The Strategy</h4>
+        <ul>
+          <li><strong>4 Content Pillars:</strong> The Churning Show · Flavor Drops · Garden Experience · Community UGC</li>
+          <li><strong>Churning Hour Ritual:</strong> Daily 6–8 PM live events with customer photo moments and Story countdowns</li>
+          <li><strong>#ChurnedNOW UGC campaign</strong> — best weekly video wins a free sundae</li>
+          <li><strong>Monthly In-Store Activations:</strong> Flavor Lab Sundays → Garden Gigs → Artisan Collab Week</li>
+        </ul>
+      </div>
+      <div class="cs-block">
+        <h4>Collaborations</h4>
+        <ul>
+          <li>Coffee × Ice Cream fusion with premium coffee brands</li>
+          <li>Juhu Beach outdoor movie screening + bundled offers</li>
+          <li>Wellness Wednesdays with yoga studios — guilt-free framing</li>
+          <li>3-tier influencer plan: food critics → micro-influencers → customer advocates</li>
+        </ul>
+      </div>
+    </div>
+
+    <a href="assets/naturals-now.pdf" target="_blank" class="view-doc-btn">View Full Document →</a>
+  </div>
+</section>
+
+<!-- ── CASE STUDY: EDT ────────────────────────────────── -->
+<section id="edt" class="case-study" style="background:var(--bg);">
+  <div style="max-width:1100px; margin:0 auto;">
+    <span class="cs-brand">Case Study 02</span>
+    <h2>EDT — Social Media Strategy</h2>
+    <p style="max-width:600px; margin-bottom:2rem;">Building a content ecosystem for India's premium kitchen brand that doesn't sell appliances — it sells a way of living.</p>
+
+    <div class="cs-flow reveal">
+      <div class="cs-block">
+        <h4>The Brief</h4>
+        <p>EDT's LUMA air fryer is built with borosilicate glass bowls, a 56 dB motor, and engineering decisions that no one in the category talks about. The challenge: make technical superiority feel cultural and emotional, not spec-sheet cold.</p>
+      </div>
+      <div class="cs-block">
+        <h4>Strategic Framework</h4>
+        <p>Positioned EDT not as an appliance brand but as a <strong>cultural movement</strong> — Indian-made, world-class designed. Built five content buckets that each serve a different layer of the brand's equity.</p>
+      </div>
+    </div>
+
+    <div class="cs-flow reveal">
+      <div class="cs-block">
+        <h4>5 Content Buckets</h4>
+        <ul>
+          <li><strong>Material Truths</strong> — radical transparency on engineering decisions</li>
+          <li><strong>The Invisible Upgrade</strong> — how design removes friction you didn't know you had</li>
+          <li><strong>Ritual, Not Recipe</strong> — elevating cooking into an intentional practice</li>
+          <li><strong>Designed for India, Built for the World</strong> — national pride meets global ambition</li>
+          <li><strong>The Unboxing Feeling (But Make It Last)</strong> — UGC-driven long-term brand love</li>
+        </ul>
+      </div>
+      <div class="cs-block">
+        <h4>5 Creator Partnerships</h4>
+        <ul>
+          <li><strong>Ruchira Hoon</strong> (MasterChef India) — Conscious Kitchen Series</li>
+          <li><strong>Archit Agarwal</strong> — The Glass Bowl Series (aesthetic food photography)</li>
+          <li><strong>Rishabh Telang</strong> (fitness/strength coach) — 48-Hour Meal Prep in LUMA</li>
+          <li><strong>Mili Jhaveri</strong> (parenting) — The Real Week: Feeding Kids with LUMA</li>
+          <li><strong>Nishant Choksi</strong> (New Yorker illustrator) — The New Indian Kitchen art series</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cs-block reveal" style="margin-bottom:1.5rem;">
+      <h4>3 Founder Content Themes</h4>
+      <p>Built narrative arcs for the founder (Naiyya Sharma) across: <strong>The Decade Perspective</strong> (pattern recognition across BabyChakra → Good Glamm → EDT), <strong>The Unfiltered Build</strong> (real decision-making transparency), and <strong>The Advisor Conversations</strong> (intellectual leverage from OpenAI, Apple, and global advisors).</p>
+    </div>
+
+    <a href="assets/edt-strategy.pdf" target="_blank" class="view-doc-btn">View Full Strategy →</a>
+  </div>
+</section>
+
+<!-- ── DRISHTI ─────────────────────────────────────────── -->
+<section id="drishti">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-label">Live Execution</div>
+    <div class="drishti-grid-wrap">
+      <div class="reveal">
+        <span class="cs-brand" style="color:var(--teal)">Real-World Execution</span>
+        <h2>Drishti Fest — Instagram from Zero</h2>
+        <p>When LLDC's annual cultural festival needed a social presence that matched its ambition, I built it. As Marketing Head, I handled the full Instagram strategy — content planning, reel direction, grid aesthetic, and community management.</p>
+        <div class="drishti-stats">
+          <div class="d-stat"><div class="d-stat-val">98.9K</div><div class="d-stat-label">Reel Views (top post)</div></div>
+          <div class="d-stat"><div class="d-stat-val">14.8K</div><div class="d-stat-label">2nd Best Reel</div></div>
+          <div class="d-stat"><div class="d-stat-val">7.1K</div><div class="d-stat-label">Meet Reel Views</div></div>
+          <div class="d-stat"><div class="d-stat-val">6.4K</div><div class="d-stat-label">Teaser Reel Views</div></div>
+        </div>
+        <p style="margin-top:1.2rem; font-size:.85rem; color:rgba(255,255,255,.5);">@drishti_lldcoc — Organic growth, no paid promotion.</p>
+      </div>
+      <div class="drishti-img-frame reveal">
+        <img src="assets/drishti-grid.jpg" alt="Drishti Instagram Grid — @drishti_lldcoc" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THINKING LAB ───────────────────────────────────── -->
+<section id="thinking">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-label">Thinking Lab</div>
+    <h2>How I break down <em style="color:var(--teal)">campaigns.</em></h2>
+    <div class="tl-grid">
+      <div class="tl-card reveal">
+        <div class="tl-tag">Observation</div>
+        <h4>Why Most Brand Social Fails Before It's Posted</h4>
+        <p>The problem isn't the content. It's that nobody agreed on what the content is supposed to do. A post without an objective is just decoration.</p>
+      </div>
+      <div class="tl-card reveal">
+        <div class="tl-tag">Campaign Breakdown</div>
+        <h4>Naturals NOW: Making Process the Product</h4>
+        <p>Live churning isn't a feature — it's a content engine. The lesson: when you have something genuinely visible and differentiated, the strategy is to not hide it behind polish.</p>
+      </div>
+      <div class="tl-card reveal">
+        <div class="tl-tag">Strategic Note</div>
+        <h4>The Problem With "Authentic" Founder Content</h4>
+        <p>Most founder content fails because it performs authenticity without the actual stakes. The best founder posts — like EDT's LUMA motor story — give you a decision, not a personality.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ─────────────────────────────────────────── -->
+<section id="skills" style="background:var(--white);">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-label">Skills</div>
+    <h2>Proof, not a list.</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-cat">Content Strategy</div>
+        <div class="skill-statement">Built structured, multi-pillar content systems for brand accounts with 40+ monthly posts across Instagram, Facebook, and LinkedIn.</div>
+        <div class="skill-proof">↳ Forestkraft — 35% organic reach increase</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Social Media Execution</div>
+        <div class="skill-statement">Managed full Instagram operations — grid planning, reel ideation, community management, and influencer brief coordination.</div>
+        <div class="skill-proof">↳ Drishti Fest — 98.9K views, zero paid promotion</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Campaign Planning</div>
+        <div class="skill-statement">Designed 90-day go-to-market strategies with activation calendars, KPI targets, influencer tiers, and PR press angles.</div>
+        <div class="skill-proof">↳ Naturals NOW — full launch blueprint</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Brand Positioning</div>
+        <div class="skill-statement">Translated technical product differentiators into cultural narratives — content buckets, founder themes, and creator briefs that build brand equity over time.</div>
+        <div class="skill-proof">↳ EDT LUMA — 5 buckets, 5 creators, 3 founder arcs</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Analytics & Tools</div>
+        <div class="skill-statement">Meta Business Suite, Google Analytics, Facebook Ads Manager, SEO tools, Canva — used for performance tracking and creative production, not just reporting.</div>
+        <div class="skill-proof">↳ Consistent measurement across all roles</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Copywriting</div>
+        <div class="skill-statement">Write for engagement, not just information — hooks, captions, strategy documents, and campaign narratives that respect the reader's attention.</div>
+        <div class="skill-proof">↳ 98%+ accuracy — JoshTalks English Transcription</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SIDE QUESTS ────────────────────────────────────── -->
+<section id="sidequests">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-label">Side Quests</div>
+    <h2>Beyond the brief.</h2>
+    <p style="max-width:520px; margin-bottom:2rem;">The things I do because I can't help it. These say as much about how I think as any campaign.</p>
+    <div class="sq-grid">
+
+      <div class="sq-card reveal">
+        <div class="sq-icon">🎬</div>
+        <h3>Nijaat — Short Film Screenplay</h3>
+        <p>Written for Mumbai University's short film competition. A story about a survivor reclaiming her life post-trauma, told through character, dialogue, and scene direction. Because storytelling is strategy with feeling — and I've always written.</p>
+        <a href="assets/nijaat-screenplay.pdf" target="_blank" class="view-doc-btn" style="font-size:.8rem; padding:.6rem 1.2rem;">Read Screenplay →</a>
+      </div>
+
+      <div class="sq-card reveal">
+        <div class="sq-icon">📝</div>
+        <h3>English Transcription — JoshTalks</h3>
+        <p>Freelance content editor with Josh Talks, maintaining 98%+ accuracy across high-volume English transcriptions. Precision, patience, and an ear for language — the exact same muscles that make good copy.</p>
+        <a href="assets/joshatks-cert.pdf" target="_blank" class="view-doc-btn" style="font-size:.8rem; padding:.6rem 1.2rem;">View Certificate →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── RESUME ──────────────────────────────────────────── -->
+<section id="resume">
+  <div class="resume-inner">
+    <div class="section-label" style="justify-content:center;">Resume</div>
+    <h2>The full picture.</h2>
+    <p>3 years of marketing experience across digital strategy, content operations, B2B coordination, and brand work — with a BMS in Marketing from Mumbai University.</p>
+    <a href="assets/resume.pdf" download class="btn-primary" style="display:inline-flex; margin:0 auto;">Download Resume</a>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ───────────────────────────────────────── -->
+<section id="contact">
+  <div class="section-label" style="justify-content:center; color:var(--teal);">Let's Talk</div>
+  <h2>Got a brand that needs<br>a sharper point of view?</h2>
+  <p>I'm open to marketing roles, strategy projects, and interesting briefs. If you're building something and need someone who thinks in systems and writes in clarity — let's talk.</p>
+  <div class="contact-ctas">
+    <a href="mailto:pallavibalmiki.work@gmail.com" class="btn-teal">Send an Email</a>
+    <a href="https://www.linkedin.com/in/pallavi-balmiki/" target="_blank" class="btn-outline-white">LinkedIn →</a>
+  </div>
+  <div class="contact-info">
+    <span>📧 <a href="mailto:pallavibalmiki.work@gmail.com">pallavibalmiki.work@gmail.com</a></span>
+    <span>📞 <a href="tel:+919372943680">9372943680</a></span>
+    <span>📍 Mumbai, Maharashtra</span>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────── -->
+<footer>
+  <p>© 2025 Pallavi Balmiki. Built with intention.</p>
+</footer>
+
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Hamburger
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  }));
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
