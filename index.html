@@ -1,785 +1,562 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pallavi Balmiki — Marketing Strategist</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    /* ── RESET & BASE ─────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --navy:  #0B1F3B;
-      --bg:    #F7F7F7;
-      --teal:  #3A7D7C;
-      --beige: #E8E1D9;
-      --white: #ffffff;
-      --text:  #1a1a2e;
-      --muted: #6b7280;
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Pallavi Balmiki — Marketing Strategist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0B1F3B;--bg:#F7F7F7;--teal:#3A7D7C;--beige:#E8E1D9;--white:#fff;--muted:#6b7280;--tl:rgba(58,125,124,.12);--nl:rgba(11,31,59,.06)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--navy);overflow-x:hidden;cursor:none}
 
-    /* ── NAVBAR ───────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.1rem 5%;
-      background: rgba(247,247,247,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--beige);
-      transition: box-shadow .3s;
-    }
-    nav.scrolled { box-shadow: 0 2px 24px rgba(11,31,59,.08); }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700; font-size: 1.15rem;
-      color: var(--navy); letter-spacing: -.3px;
-      text-decoration: none;
-    }
-    .nav-logo span { color: var(--teal); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      text-decoration: none; font-size: .85rem; font-weight: 500;
-      color: var(--navy); letter-spacing: .3px;
-      position: relative; transition: color .2s;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1.5px;
-      background: var(--teal); transition: width .25s;
-    }
-    .nav-links a:hover { color: var(--teal); }
-    .nav-links a:hover::after { width: 100%; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); transition: .3s; }
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--teal);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,opacity .2s;mix-blend-mode:multiply}
+#cur-r{position:fixed;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--teal);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .3s,height .3s}
+.cg #cur{width:52px;height:52px;opacity:.15}
+.cg #cur-r{width:52px;height:52px;opacity:0}
 
-    /* ── HERO ─────────────────────────────────────── */
-    #hero {
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 7rem 5% 4rem;
-      position: relative; overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background: radial-gradient(ellipse 60% 50% at 80% 50%, rgba(58,125,124,.08) 0%, transparent 70%),
-                  radial-gradient(ellipse 40% 60% at 10% 80%, rgba(232,225,217,.5) 0%, transparent 60%);
-    }
-    .hero-blob {
-      position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
-      width: 520px; height: 520px; border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
-      background: linear-gradient(135deg, rgba(58,125,124,.12), rgba(11,31,59,.06));
-      animation: blobFloat 8s ease-in-out infinite alternate;
-      z-index: 0;
-    }
-    @keyframes blobFloat {
-      0%   { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; transform: translateY(-50%) rotate(0deg); }
-      100% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: translateY(-52%) rotate(3deg); }
-    }
-    .hero-content { position: relative; z-index: 1; max-width: 700px; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: .5rem;
-      font-size: .78rem; font-weight: 600; letter-spacing: 1.8px;
-      color: var(--teal); text-transform: uppercase; margin-bottom: 1.4rem;
-      opacity: 0; animation: fadeUp .7s .2s forwards;
-    }
-    .hero-eyebrow::before {
-      content: ''; display: block; width: 28px; height: 1.5px; background: var(--teal);
-    }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.6rem, 5vw, 4.2rem);
-      line-height: 1.12; font-weight: 900;
-      color: var(--navy); margin-bottom: 1.4rem;
-      opacity: 0; animation: fadeUp .7s .35s forwards;
-    }
-    h1 em { color: var(--teal); font-style: normal; }
-    .hero-sub {
-      font-size: 1.05rem; line-height: 1.75; color: #4b5563;
-      max-width: 520px; margin-bottom: 2.2rem;
-      opacity: 0; animation: fadeUp .7s .5s forwards;
-    }
-    .hero-ctas {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      opacity: 0; animation: fadeUp .7s .65s forwards;
-    }
-    .btn-primary {
-      background: var(--navy); color: var(--white);
-      padding: .85rem 2rem; border-radius: 6px;
-      text-decoration: none; font-weight: 600; font-size: .9rem;
-      letter-spacing: .2px; transition: background .2s, transform .2s;
-      display: inline-flex; align-items: center; gap: .5rem;
-    }
-    .btn-primary:hover { background: var(--teal); transform: translateY(-2px); }
-    .btn-secondary {
-      border: 1.5px solid var(--navy); color: var(--navy);
-      padding: .85rem 2rem; border-radius: 6px;
-      text-decoration: none; font-weight: 600; font-size: .9rem;
-      transition: border-color .2s, color .2s, transform .2s;
-      display: inline-flex; align-items: center; gap: .5rem;
-    }
-    .btn-secondary:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+/* PROGRESS */
+#pbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--teal),#6ec9c8);z-index:10000;width:0;transition:width .08s}
 
-    /* ── CREDIBILITY STRIP ────────────────────────── */
-    #cred {
-      background: var(--navy);
-      padding: 1.6rem 5%;
-      display: flex; align-items: center; justify-content: center;
-      gap: 3rem; flex-wrap: wrap;
-    }
-    .cred-item {
-      display: flex; align-items: center; gap: .7rem;
-      color: rgba(255,255,255,.8); font-size: .82rem;
-      font-weight: 500; letter-spacing: .3px;
-    }
-    .cred-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;opacity:.35;pointer-events:none;z-index:9997;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E")}
 
-    /* ── SECTION LAYOUT ───────────────────────────── */
-    section { padding: 5.5rem 5%; }
-    .section-label {
-      font-size: .72rem; font-weight: 600; letter-spacing: 2px;
-      color: var(--teal); text-transform: uppercase; margin-bottom: .8rem;
-      display: flex; align-items: center; gap: .5rem;
-    }
-    .section-label::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--teal); }
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-      font-weight: 700; color: var(--navy); margin-bottom: .9rem; line-height: 1.2;
-    }
-    h3 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 1.35rem; margin-bottom: .5rem; }
-    p { line-height: 1.78; color: #4b5563; }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(247,247,247,.9);backdrop-filter:blur(18px);border-bottom:1px solid rgba(232,225,217,.5);transition:box-shadow .3s}
+nav.s{box-shadow:0 4px 28px rgba(11,31,59,.08)}
+.nlogo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:.35rem}
+.ndot{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:.6}}
+.nlinks{display:flex;gap:1.8rem;list-style:none}
+.nlinks a{text-decoration:none;font-size:.78rem;font-weight:700;color:var(--navy);letter-spacing:.7px;text-transform:uppercase;position:relative;padding:.2rem 0;transition:color .2s}
+.nlinks a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--teal);transition:width .25s;border-radius:2px}
+.nlinks a:hover{color:var(--teal)}
+.nlinks a:hover::after{width:100%}
+.ncta{background:var(--navy)!important;color:var(--white)!important;padding:.42rem 1.1rem!important;border-radius:20px!important;transition:background .2s!important}
+.ncta:hover{background:var(--teal)!important}
+.ncta::after{display:none!important}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.ham span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:.3s}
 
-    /* ── ABOUT ────────────────────────────────────── */
-    #about { background: var(--white); }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1100px; }
-    .about-text p { margin-bottom: 1.1rem; }
-    .about-mindset {
-      background: var(--bg); border-radius: 16px; padding: 2.2rem;
-      border-left: 3px solid var(--teal);
-    }
-    .mindset-row {
-      display: flex; align-items: flex-start; gap: 1rem;
-      margin-bottom: 1.4rem; padding-bottom: 1.4rem;
-      border-bottom: 1px solid var(--beige);
-    }
-    .mindset-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .mindset-icon {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: var(--navy); color: var(--white);
-      display: flex; align-items: center; justify-content: center;
-      font-size: .9rem; flex-shrink: 0; margin-top: .1rem;
-    }
-    .mindset-text strong { display: block; color: var(--navy); font-size: .9rem; margin-bottom: .2rem; }
-    .mindset-text span { font-size: .83rem; color: var(--muted); }
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:7rem 5% 4rem;position:relative;overflow:hidden}
+.hgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(11,31,59,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(11,31,59,.04) 1px,transparent 1px);background-size:50px 50px}
+.hblob1{position:absolute;right:-100px;top:5%;width:580px;height:580px;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;background:radial-gradient(circle,rgba(58,125,124,.12),rgba(58,125,124,.02));animation:b1 10s ease-in-out infinite alternate;pointer-events:none}
+.hblob2{position:absolute;left:-60px;bottom:-5%;width:380px;height:380px;border-radius:40% 60% 30% 70%/60% 30% 70% 40%;background:radial-gradient(circle,rgba(232,225,217,.55),transparent);animation:b2 8s ease-in-out infinite alternate;pointer-events:none}
+@keyframes b1{0%{border-radius:60% 40% 70% 30%/50% 60% 40% 50%;transform:rotate(0)}100%{border-radius:30% 70% 40% 60%/60% 40% 60% 40%;transform:rotate(5deg)}}
+@keyframes b2{0%{transform:rotate(0) scale(1)}100%{transform:rotate(-5deg) scale(1.06)}}
+.fbadge{position:absolute;background:var(--white);border:1px solid var(--beige);border-radius:12px;padding:.5rem 1rem;font-size:.73rem;font-weight:700;color:var(--navy);box-shadow:0 8px 24px rgba(11,31,59,.08);animation:fy 4s ease-in-out infinite alternate;display:flex;align-items:center;gap:.45rem;pointer-events:none}
+.fdot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 1.5s infinite}
+.fb1{top:22%;right:8%}
+.fb2{top:56%;right:14%;animation-delay:1.2s}
+.fb3{bottom:22%;right:6%;animation-delay:2.1s}
+@keyframes fy{0%{transform:translateY(0)}100%{transform:translateY(-12px)}}
+.hcon{position:relative;z-index:1;max-width:680px}
+.hbrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.73rem;font-weight:700;letter-spacing:2px;color:var(--teal);text-transform:uppercase;margin-bottom:1.4rem;opacity:0;animation:fu .6s .1s forwards}
+.hbrow .hl{width:28px;height:2px;background:var(--teal);border-radius:2px}
+.hbrow .pill{background:rgba(58,125,124,.1);padding:.18rem .7rem;border-radius:20px;font-size:.68rem}
+h1.hh{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5.5vw,4.5rem);line-height:1.1;font-weight:900;color:var(--navy);margin-bottom:1rem;opacity:0;animation:fu .6s .25s forwards}
+.tw{color:var(--teal);font-style:italic;display:inline-block;min-width:2ch}
+#tc{display:inline-block;width:3px;height:.85em;background:var(--teal);vertical-align:middle;margin-left:2px;animation:blink .75s step-end infinite;border-radius:1px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hsub{font-size:.98rem;line-height:1.82;color:#4b5563;max-width:500px;margin-bottom:2.2rem;opacity:0;animation:fu .6s .4s forwards}
+.hsub strong{color:var(--navy);font-weight:600}
+.hctas{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fu .6s .55s forwards}
+.bmag{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:.5rem;padding:.88rem 2.1rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.87rem;letter-spacing:.3px;transition:transform .2s,box-shadow .2s}
+.bmag::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.13);transform:translateX(-100%) skewX(-15deg);transition:transform .4s}
+.bmag:hover::before{transform:translateX(110%) skewX(-15deg)}
+.bp{background:var(--navy);color:var(--white)}
+.bp:hover{box-shadow:0 10px 30px rgba(11,31,59,.28);transform:translateY(-3px)}
+.bs{border:2px solid var(--navy);color:var(--navy)}
+.bs:hover{border-color:var(--teal);color:var(--teal);box-shadow:0 10px 30px rgba(58,125,124,.14);transform:translateY(-3px)}
+.hscr{position:absolute;bottom:2.5rem;left:5%;display:flex;align-items:center;gap:.6rem;font-size:.7rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);opacity:0;animation:fu .6s .8s forwards}
+.sline{width:40px;height:1px;background:var(--muted);position:relative;overflow:hidden}
+.sline::after{content:'';position:absolute;left:-100%;top:0;width:100%;height:100%;background:var(--teal);animation:sl 2s ease-in-out infinite}
+@keyframes sl{0%{left:-100%}100%{left:100%}}
+@keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
-    /* ── WORK ─────────────────────────────────────── */
-    #work { background: var(--bg); }
-    .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.6rem; margin-top: 2.5rem; }
-    .work-card {
-      background: var(--white); border-radius: 14px; overflow: hidden;
-      border: 1px solid var(--beige); transition: transform .25s, box-shadow .25s;
-      display: flex; flex-direction: column;
-    }
-    .work-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(11,31,59,.1); }
-    .card-accent { height: 4px; }
-    .card-body { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
-    .card-tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-    .tag {
-      font-size: .7rem; font-weight: 600; letter-spacing: .8px;
-      text-transform: uppercase; padding: .25rem .7rem; border-radius: 20px;
-    }
-    .tag-strategy { background: rgba(11,31,59,.08); color: var(--navy); }
-    .tag-content  { background: rgba(58,125,124,.1); color: var(--teal); }
-    .tag-exec     { background: rgba(232,225,217,.7); color: #5a4a3a; }
-    .card-body h3 { font-size: 1.2rem; margin-bottom: .6rem; }
-    .card-body p  { font-size: .88rem; margin-bottom: 1.4rem; flex: 1; }
-    .card-link {
-      text-decoration: none; font-size: .83rem; font-weight: 600;
-      color: var(--teal); display: inline-flex; align-items: center; gap: .35rem;
-      transition: gap .2s;
-    }
-    .card-link:hover { gap: .6rem; }
-    .card-link::after { content: '→'; }
+/* MARQUEE */
+.mqw{background:var(--navy);overflow:hidden;padding:.85rem 0}
+.mqt{display:flex;width:max-content;animation:mq 22s linear infinite}
+.mqt:hover{animation-play-state:paused}
+.mqi{display:flex;align-items:center;gap:.7rem;padding:0 2.2rem;color:rgba(255,255,255,.65);font-size:.75rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap}
+.sep{color:var(--teal);font-size:.9rem}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-    /* ── CASE STUDY SECTION ───────────────────────── */
-    .case-study { background: var(--white); }
-    .case-study:nth-of-type(odd) { background: var(--bg); }
-    .cs-header { margin-bottom: 3rem; }
-    .cs-brand {
-      display: inline-block; font-size: .72rem; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--teal); margin-bottom: .5rem;
-    }
-    .cs-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
-    .cs-block {
-      background: var(--bg); border-radius: 12px; padding: 1.6rem;
-      border-top: 3px solid var(--beige);
-    }
-    .case-study .cs-block:hover { border-top-color: var(--teal); }
-    .cs-block h4 {
-      font-size: .7rem; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--teal); margin-bottom: .7rem;
-    }
-    .cs-block p, .cs-block li { font-size: .88rem; line-height: 1.7; }
-    .cs-block ul { padding-left: 1.2rem; color: #4b5563; }
-    .cs-block li { margin-bottom: .4rem; }
-    .cs-metrics { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1.5rem 0; }
-    .metric {
-      background: var(--navy); color: var(--white);
-      border-radius: 10px; padding: 1.2rem 1.6rem; text-align: center;
-    }
-    .metric-val { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--teal); }
-    .metric-label { font-size: .72rem; letter-spacing: .5px; color: rgba(255,255,255,.7); margin-top: .2rem; }
-    .view-doc-btn {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: var(--navy); color: var(--white);
-      padding: .75rem 1.6rem; border-radius: 6px; text-decoration: none;
-      font-size: .85rem; font-weight: 600; transition: background .2s, transform .2s;
-      margin-top: 1rem;
-    }
-    .view-doc-btn:hover { background: var(--teal); transform: translateY(-2px); }
+/* SECTION COMMONS */
+.sec{padding:6rem 5%}
+.si{max-width:1100px;margin:0 auto}
+.sl{font-size:.68rem;font-weight:700;letter-spacing:2.5px;color:var(--teal);text-transform:uppercase;display:flex;align-items:center;gap:.55rem;margin-bottom:.7rem}
+.sl::before{content:'';width:22px;height:2px;background:var(--teal);border-radius:2px}
+h2{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.5vw,2.9rem);font-weight:700;color:var(--navy);line-height:1.15}
 
-    /* ── DRISHTI ──────────────────────────────────── */
-    #drishti { background: var(--navy); color: var(--white); }
-    #drishti .section-label { color: var(--teal); }
-    #drishti h2 { color: var(--white); }
-    #drishti p { color: rgba(255,255,255,.7); }
-    .drishti-grid-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 2.5rem; }
-    .drishti-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
-    .d-stat {
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-      border-radius: 10px; padding: 1.2rem; text-align: center;
-    }
-    .d-stat-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--teal); }
-    .d-stat-label { font-size: .75rem; color: rgba(255,255,255,.6); margin-top: .3rem; }
-    .drishti-img-frame {
-      border-radius: 16px; overflow: hidden;
-      border: 2px solid rgba(255,255,255,.1);
-      box-shadow: 0 24px 60px rgba(0,0,0,.4);
-    }
-    .drishti-img-frame img { width: 100%; display: block; }
+/* ABOUT */
+#about{background:var(--white)}
+.agrid{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:start;margin-top:2.5rem}
+.atext p{line-height:1.85;color:#4b5563;margin-bottom:1.1rem;font-size:.93rem}
+.atext em{color:var(--navy);font-style:normal;font-weight:600}
+.mcards{display:flex;flex-direction:column;gap:.75rem}
+.mc{background:var(--bg);border-radius:12px;padding:1.25rem 1.4rem;border:1px solid var(--beige);display:flex;gap:1rem;align-items:flex-start;transition:border-color .25s,transform .25s,box-shadow .25s;cursor:default}
+.mc:hover{border-color:var(--teal);transform:translateX(5px);box-shadow:0 6px 20px rgba(58,125,124,.1)}
+.mi{width:37px;height:37px;border-radius:9px;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.mc strong{display:block;color:var(--navy);font-size:.87rem;font-weight:700;margin-bottom:.18rem}
+.mc span{font-size:.78rem;color:var(--muted);line-height:1.5}
 
-    /* ── SKILLS ───────────────────────────────────── */
-    #skills { background: var(--white); }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
-    .skill-card {
-      border: 1px solid var(--beige); border-radius: 12px; padding: 1.5rem;
-      transition: border-color .2s, transform .2s;
-    }
-    .skill-card:hover { border-color: var(--teal); transform: translateY(-3px); }
-    .skill-cat {
-      font-size: .68rem; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--teal); margin-bottom: .6rem;
-    }
-    .skill-statement { font-size: .9rem; font-weight: 500; color: var(--navy); line-height: 1.5; margin-bottom: .5rem; }
-    .skill-proof { font-size: .8rem; color: var(--muted); }
+/* WORK */
+#work{background:var(--bg)}
+.whead{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;gap:2rem;flex-wrap:wrap}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.5rem}
+.wcard{background:var(--white);border-radius:16px;overflow:hidden;border:1px solid var(--beige);transition:box-shadow .3s;display:flex;flex-direction:column;cursor:pointer;will-change:transform}
+.wcard:hover{box-shadow:0 22px 50px rgba(11,31,59,.12)}
+.ctop{padding:1.8rem 1.8rem 0;position:relative}
+.cnum{font-family:'Syne',sans-serif;font-size:4.5rem;font-weight:800;color:var(--beige);line-height:1;position:absolute;top:.6rem;right:1.1rem;transition:color .35s;user-select:none}
+.wcard:hover .cnum{color:rgba(58,125,124,.18)}
+.ctags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem}
+.tg{font-size:.62rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:.2rem .65rem;border-radius:20px}
+.ts{background:rgba(11,31,59,.08);color:var(--navy)}
+.tc{background:rgba(58,125,124,.1);color:var(--teal)}
+.te{background:rgba(232,225,217,.9);color:#5a4a3a}
+.cbody{padding:0 1.8rem 1.8rem;flex:1;display:flex;flex-direction:column}
+.cline{height:2px;background:var(--beige);border-radius:2px;margin:.75rem 0 1.1rem;transition:background .3s}
+.wcard:hover .cline{background:var(--teal)}
+.cbody h3{font-family:'Playfair Display',serif;font-size:1.18rem;color:var(--navy);margin-bottom:.55rem;line-height:1.3}
+.cbody p{font-size:.84rem;color:var(--muted);line-height:1.7;flex:1;margin-bottom:1.1rem}
+.clink{text-decoration:none;font-size:.78rem;font-weight:700;color:var(--teal);display:inline-flex;align-items:center;gap:.4rem;text-transform:uppercase;letter-spacing:.5px;transition:gap .2s}
+.clink:hover{gap:.7rem}
 
-    /* ── SIDE QUESTS ──────────────────────────────── */
-    #sidequests { background: var(--bg); }
-    .sq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; margin-top: 2rem; }
-    .sq-card {
-      background: var(--white); border-radius: 14px; padding: 2rem;
-      border: 1px solid var(--beige); transition: transform .25s, box-shadow .25s;
-      position: relative; overflow: hidden;
-    }
-    .sq-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--teal), transparent);
-    }
-    .sq-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(11,31,59,.08); }
-    .sq-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .sq-card h3 { margin-bottom: .6rem; font-size: 1.1rem; }
-    .sq-card p { font-size: .86rem; margin-bottom: 1.2rem; }
+/* CASE STUDIES */
+.css{padding:6rem 5%}
+.css:nth-of-type(odd){background:var(--white)}
+.css:nth-of-type(even){background:var(--bg)}
+.csi{max-width:1100px;margin:0 auto}
+.csb{font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:.4rem}
+.csh{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;color:var(--navy);margin-bottom:.65rem}
+.css p.sub{color:var(--muted);max-width:540px;margin-bottom:2rem;font-size:.91rem;line-height:1.7}
+.mrow{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.mpill{background:var(--navy);color:var(--white);border-radius:12px;padding:1rem 1.4rem;text-align:center;transition:transform .25s,box-shadow .25s;cursor:default}
+.mpill:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(11,31,59,.22)}
+.mv{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--teal);line-height:1}
+.ml{font-size:.65rem;color:rgba(255,255,255,.55);margin-top:.3rem;letter-spacing:.4px}
+.cblocks{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:2rem}
+.cb{background:var(--bg);border-radius:12px;padding:1.4rem;border-top:3px solid var(--beige);transition:border-top-color .25s,transform .25s}
+.cb:hover{border-top-color:var(--teal);transform:translateY(-3px)}
+.cb h4{font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:.65rem}
+.cb p,.cb li{font-size:.84rem;line-height:1.72;color:#4b5563}
+.cb ul{padding-left:1rem}
+.cb li{margin-bottom:.3rem}
+.dbtn{display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:var(--white);padding:.75rem 1.7rem;border-radius:8px;text-decoration:none;font-size:.8rem;font-weight:700;letter-spacing:.3px;transition:background .2s,transform .2s,box-shadow .2s}
+.dbtn:hover{background:var(--teal);transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,125,124,.25)}
 
-    /* ── THINKING LAB ─────────────────────────────── */
-    #thinking { background: var(--white); }
-    .tl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; margin-top: 2rem; }
-    .tl-card {
-      border: 1px solid var(--beige); border-radius: 12px; padding: 1.6rem;
-      transition: border-color .2s;
-    }
-    .tl-card:hover { border-color: var(--teal); }
-    .tl-tag { font-size: .68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--teal); margin-bottom: .6rem; }
-    .tl-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); margin-bottom: .5rem; }
-    .tl-card p { font-size: .84rem; }
+/* DRISHTI */
+#drishti{background:var(--navy);padding:6rem 5%}
+#drishti .sl{color:rgba(58,125,124,.85)}
+#drishti .sl::before{background:var(--teal)}
+#drishti h2{color:var(--white)}
+.dgw{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:2.5rem;max-width:1100px}
+.dgt p{color:rgba(255,255,255,.68);line-height:1.82;margin-bottom:1.1rem;font-size:.91rem}
+.dss{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.4rem}
+.ds{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:1rem;text-align:center;transition:background .25s,transform .25s;cursor:default}
+.ds:hover{background:rgba(255,255,255,.09);transform:scale(1.03)}
+.dv{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:var(--teal)}
+.dl{font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.25rem}
+.dimg{border-radius:16px;overflow:hidden;border:2px solid rgba(255,255,255,.07);box-shadow:0 30px 70px rgba(0,0,0,.4);transition:transform .4s}
+.dimg:hover{transform:scale(1.02)}
+.dimg img{width:100%;display:block}
 
-    /* ── RESUME ───────────────────────────────────── */
-    #resume { background: var(--beige); text-align: center; }
-    .resume-inner { max-width: 560px; margin: 0 auto; }
-    .resume-inner p { margin-bottom: 2rem; }
+/* SKILLS */
+#skills{background:var(--white);padding:6rem 5%}
+.skgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.1rem;margin-top:2.2rem;max-width:1100px}
+.skc{border:1px solid var(--beige);border-radius:12px;padding:1.45rem;transition:border-color .25s,transform .2s,box-shadow .2s;cursor:default;position:relative;overflow:hidden}
+.skc::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(58,125,124,.05),transparent);opacity:0;transition:opacity .3s}
+.skc:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:0 12px 32px rgba(58,125,124,.1)}
+.skc:hover::after{opacity:1}
+.scat{font-size:.63rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:.55rem}
+.sstmt{font-size:.88rem;font-weight:600;color:var(--navy);line-height:1.5;margin-bottom:.45rem}
+.sproof{font-size:.77rem;color:var(--muted)}
+.sbar{margin-top:.85rem;background:var(--beige);border-radius:4px;height:3px;overflow:hidden}
+.sb{height:100%;background:linear-gradient(90deg,var(--teal),#6ec9c8);border-radius:4px;width:0;transition:width 1.3s cubic-bezier(.25,.46,.45,.94)}
 
-    /* ── FINAL CTA ────────────────────────────────── */
-    #contact {
-      background: var(--navy); color: var(--white); text-align: center;
-      padding: 6rem 5%;
-    }
-    #contact h2 { color: var(--white); margin-bottom: 1rem; }
-    #contact p { color: rgba(255,255,255,.7); max-width: 480px; margin: 0 auto 2.5rem; }
-    .contact-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-teal {
-      background: var(--teal); color: var(--white);
-      padding: .85rem 2rem; border-radius: 6px;
-      text-decoration: none; font-weight: 600; font-size: .9rem;
-      transition: opacity .2s, transform .2s;
-    }
-    .btn-teal:hover { opacity: .85; transform: translateY(-2px); }
-    .btn-outline-white {
-      border: 1.5px solid rgba(255,255,255,.4); color: var(--white);
-      padding: .85rem 2rem; border-radius: 6px;
-      text-decoration: none; font-weight: 600; font-size: .9rem;
-      transition: border-color .2s, transform .2s;
-    }
-    .btn-outline-white:hover { border-color: var(--white); transform: translateY(-2px); }
-    .contact-info {
-      margin-top: 3rem; display: flex; justify-content: center; gap: 2rem;
-      flex-wrap: wrap; color: rgba(255,255,255,.5); font-size: .85rem;
-    }
-    .contact-info a { color: rgba(255,255,255,.6); text-decoration: none; transition: color .2s; }
-    .contact-info a:hover { color: var(--teal); }
+/* SIDE QUESTS */
+#sq{background:var(--bg);padding:6rem 5%}
+.sqg{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;max-width:1100px}
+.sqc{background:var(--white);border-radius:16px;padding:2.2rem;border:1px solid var(--beige);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+.sqc::before{content:'';position:absolute;top:-40px;right:-40px;width:110px;height:110px;border-radius:50%;background:var(--tl);transition:transform .4s}
+.sqc:hover::before{transform:scale(2.8)}
+.sqc:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(11,31,59,.1)}
+.sqic{font-size:2.2rem;margin-bottom:1rem;position:relative;z-index:1}
+.sqc h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--navy);margin-bottom:.55rem;position:relative;z-index:1}
+.sqc p{font-size:.84rem;color:var(--muted);line-height:1.75;margin-bottom:1.3rem;position:relative;z-index:1}
 
-    /* ── FOOTER ───────────────────────────────────── */
-    footer {
-      background: #070f1e; color: rgba(255,255,255,.3);
-      text-align: center; padding: 1.5rem; font-size: .78rem;
-    }
+/* THINKING */
+#thinking{background:var(--navy);padding:6rem 5%}
+#thinking .sl{color:rgba(58,125,124,.85)}
+#thinking .sl::before{background:var(--teal)}
+#thinking h2{color:var(--white)}
+.tlg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem;margin-top:2rem;max-width:1100px}
+.tlc{border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.5rem;background:rgba(255,255,255,.03);transition:background .25s,border-color .25s,transform .25s;cursor:default}
+.tlc:hover{background:rgba(255,255,255,.07);border-color:rgba(58,125,124,.4);transform:translateY(-3px)}
+.tlt{font-size:.63rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--teal);margin-bottom:.55rem}
+.tlc h4{font-family:'Playfair Display',serif;font-size:1.02rem;color:var(--white);margin-bottom:.45rem}
+.tlc p{font-size:.81rem;color:rgba(255,255,255,.52);line-height:1.7}
 
-    /* ── DIVIDER ──────────────────────────────────── */
-    .divider { height: 1px; background: var(--beige); max-width: 1100px; margin: 0 auto; }
+/* RESUME */
+#resume{background:var(--beige);padding:5rem 5%;text-align:center}
+.ri{max-width:520px;margin:0 auto}
+.ri p{color:#5a5047;line-height:1.75;margin-bottom:2rem;font-size:.93rem}
 
-    /* ── SCROLL REVEAL ────────────────────────────── */
-    .reveal {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity .65s ease, transform .65s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+/* CONTACT */
+#contact{background:var(--navy);padding:7rem 5%;text-align:center}
+#contact h2{color:var(--white);margin-bottom:1rem}
+#contact .cp{color:rgba(255,255,255,.62);max-width:430px;margin:0 auto 2.5rem;font-size:.92rem;line-height:1.72}
+.cbtns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.bteal{background:var(--teal);color:var(--white);padding:.88rem 2.1rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.87rem;transition:transform .2s,box-shadow .2s}
+.bteal:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(58,125,124,.35)}
+.bwh{border:2px solid rgba(255,255,255,.28);color:var(--white);padding:.88rem 2.1rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.87rem;transition:border-color .2s,transform .2s}
+.bwh:hover{border-color:var(--white);transform:translateY(-3px)}
+.cdet{margin-top:3rem;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+.cdi{display:flex;align-items:center;gap:.45rem;font-size:.8rem;color:rgba(255,255,255,.4)}
+.cdi a,.ceml{color:rgba(255,255,255,.52);text-decoration:none;transition:color .2s}
+.cdi a:hover,.ceml:hover{color:var(--teal)}
+.ceml{cursor:pointer;border:none;background:none;font-family:inherit;font-size:inherit}
 
-    /* ── MOBILE ───────────────────────────────────── */
-    @media (max-width: 768px) {
-      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); padding: 1.5rem 5%; gap: 1.2rem; border-bottom: 1px solid var(--beige); }
-      .nav-links.open { display: flex; }
-      .hamburger { display: flex; }
-      .about-grid, .cs-flow, .drishti-grid-wrap, .sq-grid { grid-template-columns: 1fr; gap: 2rem; }
-      #cred { gap: 1.2rem; }
-      .cs-metrics { gap: .8rem; }
-    }
-  </style>
+/* TOAST */
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:var(--white);padding:.65rem 1.5rem;border-radius:30px;font-size:.8rem;font-weight:600;z-index:9996;border:1px solid var(--teal);opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.175,.885,.32,1.275),opacity .3s;white-space:nowrap}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+footer{background:#060e1c;color:rgba(255,255,255,.22);text-align:center;padding:1.3rem;font-size:.73rem}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+.rvl{opacity:0;transform:translateX(-26px);transition:opacity .65s ease,transform .65s ease}
+.rvr{opacity:0;transform:translateX(26px);transition:opacity .65s ease,transform .65s ease}
+.rv.on,.rvl.on,.rvr.on{opacity:1;transform:none}
+
+/* MOBILE */
+@media(max-width:768px){
+  body{cursor:auto}
+  #cur,#cur-r{display:none}
+  .nlinks{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--bg);padding:1.5rem 5%;gap:1.2rem;border-bottom:1px solid var(--beige)}
+  .nlinks.open{display:flex}
+  .ham{display:flex}
+  .agrid,.cblocks,.dgw,.sqg{grid-template-columns:1fr;gap:2rem}
+  .fbadge{display:none}
+  .hblob1{width:280px;height:280px;right:-50px}
+}
+</style>
 </head>
 <body>
 
-<!-- ── NAVBAR ──────────────────────────────────────── -->
-<nav id="navbar">
-  <a href="#hero" class="nav-logo">Pallavi<span>.</span></a>
-  <ul class="nav-links" id="navLinks">
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div id="pbar"></div>
+<div id="toast">📋 Email copied to clipboard!</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nlogo">Pallavi<div class="ndot"></div></a>
+  <ul class="nlinks" id="nl">
     <li><a href="#work">Work</a></li>
     <li><a href="#thinking">Thinking</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#sidequests">Side Quests</a></li>
+    <li><a href="#sq">Side Quests</a></li>
     <li><a href="#resume">Resume</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="ncta">Say Hi ✦</a></li>
   </ul>
-  <div class="hamburger" id="hamburger" onclick="toggleNav()">
-    <span></span><span></span><span></span>
-  </div>
+  <div class="ham" id="ham"><span></span><span></span><span></span></div>
 </nav>
 
-<!-- ── HERO ────────────────────────────────────────── -->
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-blob"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Marketing Strategist · Mumbai</div>
-    <h1>Strategy that<br><em>makes people act.</em></h1>
-    <p class="hero-sub">
-      I build marketing that earns attention — through sharp positioning, structured content, and creative that respects the audience's intelligence. Not aesthetics for aesthetics' sake. Purpose behind every decision.
-    </p>
-    <div class="hero-ctas">
-      <a href="#work" class="btn-primary">View My Work</a>
-      <a href="assets/resume.pdf" download class="btn-secondary">Download Resume</a>
+  <div class="hgrid"></div>
+  <div class="hblob1"></div>
+  <div class="hblob2"></div>
+  <div class="fbadge fb1"><span class="fdot"></span>98.9K Reel Views</div>
+  <div class="fbadge fb2"><span class="fdot"></span>90-Day Strategy</div>
+  <div class="fbadge fb3"><span class="fdot"></span>35% Reach Growth</div>
+  <div class="hcon">
+    <div class="hbrow"><span class="hl"></span><span class="pill">Open to Work · Mumbai</span>Marketing Strategist</div>
+    <h1 class="hh">Marketing that makes<br>people <span class="tw" id="tw"></span><span id="tc"></span></h1>
+    <p class="hsub">I build strategies that earn attention — through <strong>sharp positioning</strong>, structured content, and creative that respects the audience's intelligence. <strong>Purpose behind every decision.</strong></p>
+    <div class="hctas">
+      <a href="#work" class="bmag bp">View My Work ↓</a>
+      <a href="assets/resume.pdf" download class="bmag bs">Download Resume</a>
     </div>
   </div>
+  <div class="hscr"><div class="sline"></div>Scroll to explore</div>
 </section>
 
-<!-- ── CREDIBILITY STRIP ────────────────────────────── -->
-<div id="cred">
-  <div class="cred-item"><span class="cred-dot"></span>Digital Strategy</div>
-  <div class="cred-item"><span class="cred-dot"></span>Content Architecture</div>
-  <div class="cred-item"><span class="cred-dot"></span>Campaign Execution</div>
-  <div class="cred-item"><span class="cred-dot"></span>Analytics-Led Decisions</div>
-  <div class="cred-item"><span class="cred-dot"></span>Brand Consistency</div>
-  <div class="cred-item"><span class="cred-dot"></span>Audience Understanding</div>
+<!-- MARQUEE -->
+<div class="mqw">
+  <div class="mqt">
+    <div class="mqi">Digital Strategy<span class="sep">✦</span></div>
+    <div class="mqi">Content Architecture<span class="sep">✦</span></div>
+    <div class="mqi">Social Execution<span class="sep">✦</span></div>
+    <div class="mqi">Campaign Planning<span class="sep">✦</span></div>
+    <div class="mqi">Brand Positioning<span class="sep">✦</span></div>
+    <div class="mqi">Analytics-Led Decisions<span class="sep">✦</span></div>
+    <div class="mqi">Influencer Strategy<span class="sep">✦</span></div>
+    <div class="mqi">Audience Thinking<span class="sep">✦</span></div>
+    <div class="mqi">Digital Strategy<span class="sep">✦</span></div>
+    <div class="mqi">Content Architecture<span class="sep">✦</span></div>
+    <div class="mqi">Social Execution<span class="sep">✦</span></div>
+    <div class="mqi">Campaign Planning<span class="sep">✦</span></div>
+    <div class="mqi">Brand Positioning<span class="sep">✦</span></div>
+    <div class="mqi">Analytics-Led Decisions<span class="sep">✦</span></div>
+    <div class="mqi">Influencer Strategy<span class="sep">✦</span></div>
+    <div class="mqi">Audience Thinking<span class="sep">✦</span></div>
+  </div>
 </div>
 
-<!-- ── ABOUT ────────────────────────────────────────── -->
-<section id="about">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div class="section-label">How I Think</div>
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <h2>Strategy first.<br>Always.</h2>
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="si">
+    <div class="sl">How I Think</div>
+    <h2>Strategy first.<br><em style="color:var(--teal);font-style:italic">Always.</em></h2>
+    <div class="agrid">
+      <div class="atext rvl">
         <p>I don't start with content. I start with the question: <em>what do we actually want this person to do, feel, or believe?</em> Everything else — format, copy, cadence — follows that answer.</p>
         <p>Across brand strategy, social execution, and content planning, I've found that most marketing underperforms not because of bad creative, but because nobody agreed on the problem first.</p>
         <p>My approach combines structured thinking with creative execution — I map the logic before I make the work. That's what I bring to every brief.</p>
       </div>
-      <div class="about-mindset reveal">
-        <div class="mindset-row">
-          <div class="mindset-icon">🎯</div>
-          <div class="mindset-text">
-            <strong>Audience Before Aesthetics</strong>
-            <span>Understand who you're talking to. Then decide how to say it.</span>
-          </div>
-        </div>
-        <div class="mindset-row">
-          <div class="mindset-icon">🏗️</div>
-          <div class="mindset-text">
-            <strong>Structure Carries the Story</strong>
-            <span>A campaign without structure is just noise. I build the skeleton before the skin.</span>
-          </div>
-        </div>
-        <div class="mindset-row">
-          <div class="mindset-icon">📊</div>
-          <div class="mindset-text">
-            <strong>Data Sharpens Instinct</strong>
-            <span>Analytics aren't the answer — they sharpen the right questions.</span>
-          </div>
-        </div>
-        <div class="mindset-row">
-          <div class="mindset-icon">✏️</div>
-          <div class="mindset-text">
-            <strong>Clarity Over Cleverness</strong>
-            <span>If it needs explaining, it doesn't work. I make it obvious.</span>
-          </div>
-        </div>
+      <div class="mcards rvr">
+        <div class="mc"><div class="mi">🎯</div><div><strong>Audience Before Aesthetics</strong><span>Understand who you're talking to. Then decide how to say it.</span></div></div>
+        <div class="mc"><div class="mi">🏗️</div><div><strong>Structure Carries the Story</strong><span>A campaign without structure is just noise. Build the skeleton before the skin.</span></div></div>
+        <div class="mc"><div class="mi">📊</div><div><strong>Data Sharpens Instinct</strong><span>Analytics aren't the answer — they sharpen the right questions.</span></div></div>
+        <div class="mc"><div class="mi">✏️</div><div><strong>Clarity Over Cleverness</strong><span>If it needs explaining, it doesn't work. Make it obvious.</span></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── FEATURED WORK ─────────────────────────────────── -->
-<section id="work">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div class="section-label">Featured Work</div>
-    <h2>Projects that moved <em style="color:var(--teal)">something</em>.</h2>
-    <div class="work-grid">
-
-      <div class="work-card reveal">
-        <div class="card-accent" style="background:var(--teal)"></div>
-        <div class="card-body">
-          <div class="card-tags">
-            <span class="tag tag-strategy">Strategy</span>
-            <span class="tag tag-exec">Marketing Plan</span>
-          </div>
-          <h3>Naturals NOW — 90-Day Launch Strategy</h3>
-          <p>Developed a full go-to-market plan for Mumbai's first live-churning artisanal ice cream experience in Juhu — covering positioning, content pillars, events, influencer tiers, and brand rituals.</p>
-          <a href="#naturals" class="card-link">View Case Study</a>
-        </div>
+<!-- WORK -->
+<section id="work" class="sec">
+  <div class="si">
+    <div class="whead">
+      <div><div class="sl">Featured Work</div><h2>Projects that<br><em style="color:var(--teal);font-style:italic">moved something.</em></h2></div>
+      <p style="max-width:260px;color:var(--muted);font-size:.86rem;line-height:1.7">Three projects. Three different challenges. One consistent standard.</p>
+    </div>
+    <div class="wgrid">
+      <div class="wcard rv" onclick="location.href='#naturals'">
+        <div class="ctop"><div class="cnum">01</div><div class="ctags"><span class="tg ts">Strategy</span><span class="tg te">Marketing Plan</span></div></div>
+        <div class="cbody"><div class="cline"></div><h3>Naturals NOW — 90-Day Launch Strategy</h3><p>Full go-to-market plan for Mumbai's first live-churning artisanal ice cream experience. Positioning, content pillars, events, influencer tiers, and brand rituals.</p><a href="#naturals" class="clink">View Case Study →</a></div>
       </div>
-
-      <div class="work-card reveal">
-        <div class="card-accent" style="background:var(--navy)"></div>
-        <div class="card-body">
-          <div class="card-tags">
-            <span class="tag tag-content">Content</span>
-            <span class="tag tag-strategy">Platform Strategy</span>
-          </div>
-          <h3>EDT — Social Media Strategy</h3>
-          <p>Crafted a complete social strategy for a premium Indian kitchen appliance brand — 5 original content buckets, 5 creator partnerships, 3 founder narrative themes. Built to make the brand feel like a cultural movement, not an appliance company.</p>
-          <a href="#edt" class="card-link">View Case Study</a>
-        </div>
+      <div class="wcard rv" onclick="location.href='#edt'" style="transition-delay:.1s">
+        <div class="ctop"><div class="cnum">02</div><div class="ctags"><span class="tg tc">Content</span><span class="tg ts">Platform Strategy</span></div></div>
+        <div class="cbody"><div class="cline"></div><h3>EDT — Social Media Strategy</h3><p>5 content buckets, 5 creator partnerships, 3 founder narrative arcs. Built to make a premium appliance brand feel like a cultural movement.</p><a href="#edt" class="clink">View Case Study →</a></div>
       </div>
-
-      <div class="work-card reveal">
-        <div class="card-accent" style="background:#c8a04a"></div>
-        <div class="card-body">
-          <div class="card-tags">
-            <span class="tag tag-exec">Execution</span>
-            <span class="tag tag-content">Social Media</span>
-          </div>
-          <h3>Drishti Fest — Instagram Execution</h3>
-          <p>Led the end-to-end Instagram presence for Drishti, LLDC's annual college festival. One reel hit 98.9K views. Built and maintained the grid aesthetic, reel strategy, and community engagement from scratch.</p>
-          <a href="#drishti" class="card-link">See the Work</a>
-        </div>
+      <div class="wcard rv" onclick="location.href='#drishti'" style="transition-delay:.2s">
+        <div class="ctop"><div class="cnum">03</div><div class="ctags"><span class="tg te">Execution</span><span class="tg tc">Social Media</span></div></div>
+        <div class="cbody"><div class="cline"></div><h3>Drishti Fest — Instagram Execution</h3><p>End-to-end Instagram strategy for LLDC's college festival. One reel hit 98.9K views. Grid, reels, and community — built from zero.</p><a href="#drishti" class="clink">See the Work →</a></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ── CASE STUDY: NATURALS NOW ──────────────────────── -->
-<section id="naturals" class="case-study" style="background:var(--white);">
-  <div style="max-width:1100px; margin:0 auto;">
-    <span class="cs-brand">Case Study 01</span>
-    <h2>Naturals NOW — 90-Day Marketing Plan</h2>
-    <p style="max-width:600px; margin-bottom:2rem;">How do you launch Mumbai's only live-churning artisanal ice cream store and make the experience — not just the product — the point?</p>
-
-    <div class="cs-metrics">
-      <div class="metric"><div class="metric-val">90</div><div class="metric-label">Day Plan</div></div>
-      <div class="metric"><div class="metric-val">+3K</div><div class="metric-label">Target Followers</div></div>
-      <div class="metric"><div class="metric-val">100+</div><div class="metric-label">UGC Posts Projected</div></div>
-      <div class="metric"><div class="metric-val">5–8</div><div class="metric-label">PR Features Targeted</div></div>
+<!-- CS: NATURALS NOW -->
+<section id="naturals" class="css" style="background:var(--white);padding:6rem 5%">
+  <div class="csi">
+    <div class="csb">Case Study 01 — Ice Cream Brand</div>
+    <h2 class="csh">Naturals NOW — 90-Day Marketing Plan</h2>
+    <p class="sub">How do you launch Mumbai's only live-churning artisanal ice cream store and make the <em>experience</em> — not just the product — the entire point?</p>
+    <div class="mrow">
+      <div class="mpill rv"><div class="mv counter" data-target="90">0</div><div class="ml">Day Plan</div></div>
+      <div class="mpill rv" style="transition-delay:.1s"><div class="mv" data-display="+3K">+3K</div><div class="ml">Target Followers</div></div>
+      <div class="mpill rv" style="transition-delay:.2s"><div class="mv" data-display="100+">100+</div><div class="ml">UGC Posts Projected</div></div>
+      <div class="mpill rv" style="transition-delay:.3s"><div class="mv" data-display="5–8">5–8</div><div class="ml">PR Features Targeted</div></div>
     </div>
-
-    <div class="cs-flow reveal">
-      <div class="cs-block">
-        <h4>The Problem</h4>
-        <p>Naturals NOW had a genuinely differentiated experience — live churning, botanical ambience, rotating menu. But experiential stores often fail to translate the IRL moment into lasting digital equity. The launch needed to make <em>theatre</em> the product.</p>
-      </div>
-      <div class="cs-block">
-        <h4>The Insight</h4>
-        <p>Mumbaikars don't just want good dessert. They want a shareable story. The live churning wasn't just a process — it was the content. Position it as Mumbai's most watchable food ritual, not just its freshest scoop.</p>
-      </div>
-      <div class="cs-block">
-        <h4>The Strategy</h4>
-        <ul>
-          <li><strong>4 Content Pillars:</strong> The Churning Show · Flavor Drops · Garden Experience · Community UGC</li>
-          <li><strong>Churning Hour Ritual:</strong> Daily 6–8 PM live events with customer photo moments and Story countdowns</li>
-          <li><strong>#ChurnedNOW UGC campaign</strong> — best weekly video wins a free sundae</li>
-          <li><strong>Monthly In-Store Activations:</strong> Flavor Lab Sundays → Garden Gigs → Artisan Collab Week</li>
-        </ul>
-      </div>
-      <div class="cs-block">
-        <h4>Collaborations</h4>
-        <ul>
-          <li>Coffee × Ice Cream fusion with premium coffee brands</li>
-          <li>Juhu Beach outdoor movie screening + bundled offers</li>
-          <li>Wellness Wednesdays with yoga studios — guilt-free framing</li>
-          <li>3-tier influencer plan: food critics → micro-influencers → customer advocates</li>
-        </ul>
-      </div>
+    <div class="cblocks">
+      <div class="cb rv"><h4>The Problem</h4><p>Naturals NOW had a genuinely differentiated experience — live churning, botanical ambience, rotating menu. The launch needed to make <strong>theatre</strong> the product, not just an amenity.</p></div>
+      <div class="cb rv" style="transition-delay:.1s"><h4>The Insight</h4><p>Mumbaikars don't just want good dessert. They want a shareable story. The live churning <em>is</em> the content. Position it as Mumbai's most watchable food ritual.</p></div>
+      <div class="cb rv"><h4>The Strategy</h4><ul><li><strong>4 Content Pillars:</strong> Churning Show · Flavor Drops · Garden Experience · UGC</li><li><strong>Churning Hour Ritual</strong> — Daily 6–8 PM live events</li><li><strong>#ChurnedNOW UGC campaign</strong> — best video wins free sundae</li><li>Monthly activations: Flavor Lab → Garden Gigs → Artisan Collabs</li></ul></div>
+      <div class="cb rv" style="transition-delay:.1s"><h4>Collaborations</h4><ul><li>Coffee × Ice Cream fusion with premium brands</li><li>Juhu Beach outdoor movie screenings</li><li>Wellness Wednesdays with yoga studios</li><li>3-tier influencer plan: critics → micro → advocates</li></ul></div>
     </div>
-
-    <a href="assets/naturals-now.pdf" target="_blank" class="view-doc-btn">View Full Document →</a>
+    <a href="assets/naturals-now.pdf" target="_blank" class="dbtn">View Full Document →</a>
   </div>
 </section>
 
-<!-- ── CASE STUDY: EDT ────────────────────────────────── -->
-<section id="edt" class="case-study" style="background:var(--bg);">
-  <div style="max-width:1100px; margin:0 auto;">
-    <span class="cs-brand">Case Study 02</span>
-    <h2>EDT — Social Media Strategy</h2>
-    <p style="max-width:600px; margin-bottom:2rem;">Building a content ecosystem for India's premium kitchen brand that doesn't sell appliances — it sells a way of living.</p>
-
-    <div class="cs-flow reveal">
-      <div class="cs-block">
-        <h4>The Brief</h4>
-        <p>EDT's LUMA air fryer is built with borosilicate glass bowls, a 56 dB motor, and engineering decisions that no one in the category talks about. The challenge: make technical superiority feel cultural and emotional, not spec-sheet cold.</p>
-      </div>
-      <div class="cs-block">
-        <h4>Strategic Framework</h4>
-        <p>Positioned EDT not as an appliance brand but as a <strong>cultural movement</strong> — Indian-made, world-class designed. Built five content buckets that each serve a different layer of the brand's equity.</p>
-      </div>
+<!-- CS: EDT -->
+<section id="edt" class="css" style="background:var(--bg);padding:6rem 5%">
+  <div class="csi">
+    <div class="csb">Case Study 02 — Premium Appliance Brand</div>
+    <h2 class="csh">EDT — Social Media Strategy</h2>
+    <p class="sub">Building a content ecosystem that doesn't sell appliances — it sells a way of living. Making technical superiority feel cultural and emotional, not spec-sheet cold.</p>
+    <div class="cblocks">
+      <div class="cb rv"><h4>The Brief</h4><p>EDT's LUMA air fryer has borosilicate glass bowls, a 56 dB motor, and engineering decisions that no one in the category talks about. The challenge: make it feel cultural and emotional.</p></div>
+      <div class="cb rv" style="transition-delay:.1s"><h4>Strategic Frame</h4><p>Position EDT not as an appliance brand — but as a <strong>cultural movement</strong>. Indian-made, world-class designed. Five content buckets each serving a different layer of brand equity.</p></div>
+      <div class="cb rv"><h4>5 Content Buckets</h4><ul><li><strong>Material Truths</strong> — radical transparency on engineering</li><li><strong>Invisible Upgrade</strong> — design that removes friction</li><li><strong>Ritual, Not Recipe</strong> — cooking as intentional practice</li><li><strong>Designed for India, Built for the World</strong></li><li><strong>Unboxing Feeling (Make It Last)</strong> — long-term UGC</li></ul></div>
+      <div class="cb rv" style="transition-delay:.1s"><h4>5 Creator Partnerships</h4><ul><li><strong>Ruchira Hoon</strong> (MasterChef India) — Conscious Kitchen</li><li><strong>Archit Agarwal</strong> — Glass Bowl Series</li><li><strong>Rishabh Telang</strong> (fitness coach) — 48-Hr Meal Prep</li><li><strong>Mili Jhaveri</strong> (parenting) — The Real Week</li><li><strong>Nishant Choksi</strong> (New Yorker) — Art collab</li></ul></div>
     </div>
-
-    <div class="cs-flow reveal">
-      <div class="cs-block">
-        <h4>5 Content Buckets</h4>
-        <ul>
-          <li><strong>Material Truths</strong> — radical transparency on engineering decisions</li>
-          <li><strong>The Invisible Upgrade</strong> — how design removes friction you didn't know you had</li>
-          <li><strong>Ritual, Not Recipe</strong> — elevating cooking into an intentional practice</li>
-          <li><strong>Designed for India, Built for the World</strong> — national pride meets global ambition</li>
-          <li><strong>The Unboxing Feeling (But Make It Last)</strong> — UGC-driven long-term brand love</li>
-        </ul>
-      </div>
-      <div class="cs-block">
-        <h4>5 Creator Partnerships</h4>
-        <ul>
-          <li><strong>Ruchira Hoon</strong> (MasterChef India) — Conscious Kitchen Series</li>
-          <li><strong>Archit Agarwal</strong> — The Glass Bowl Series (aesthetic food photography)</li>
-          <li><strong>Rishabh Telang</strong> (fitness/strength coach) — 48-Hour Meal Prep in LUMA</li>
-          <li><strong>Mili Jhaveri</strong> (parenting) — The Real Week: Feeding Kids with LUMA</li>
-          <li><strong>Nishant Choksi</strong> (New Yorker illustrator) — The New Indian Kitchen art series</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="cs-block reveal" style="margin-bottom:1.5rem;">
-      <h4>3 Founder Content Themes</h4>
-      <p>Built narrative arcs for the founder (Naiyya Sharma) across: <strong>The Decade Perspective</strong> (pattern recognition across BabyChakra → Good Glamm → EDT), <strong>The Unfiltered Build</strong> (real decision-making transparency), and <strong>The Advisor Conversations</strong> (intellectual leverage from OpenAI, Apple, and global advisors).</p>
-    </div>
-
-    <a href="assets/edt-strategy.pdf" target="_blank" class="view-doc-btn">View Full Strategy →</a>
+    <a href="assets/edt-strategy.pdf" target="_blank" class="dbtn">View Full Strategy →</a>
   </div>
 </section>
 
-<!-- ── DRISHTI ─────────────────────────────────────────── -->
+<!-- DRISHTI -->
 <section id="drishti">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div class="section-label">Live Execution</div>
-    <div class="drishti-grid-wrap">
-      <div class="reveal">
-        <span class="cs-brand" style="color:var(--teal)">Real-World Execution</span>
-        <h2>Drishti Fest — Instagram from Zero</h2>
-        <p>When LLDC's annual cultural festival needed a social presence that matched its ambition, I built it. As Marketing Head, I handled the full Instagram strategy — content planning, reel direction, grid aesthetic, and community management.</p>
-        <div class="drishti-stats">
-          <div class="d-stat"><div class="d-stat-val">98.9K</div><div class="d-stat-label">Reel Views (top post)</div></div>
-          <div class="d-stat"><div class="d-stat-val">14.8K</div><div class="d-stat-label">2nd Best Reel</div></div>
-          <div class="d-stat"><div class="d-stat-val">7.1K</div><div class="d-stat-label">Meet Reel Views</div></div>
-          <div class="d-stat"><div class="d-stat-val">6.4K</div><div class="d-stat-label">Teaser Reel Views</div></div>
+  <div class="si">
+    <div class="sl">Live Execution — Real Account</div>
+    <div class="dgw">
+      <div class="dgt rvl">
+        <h2>Drishti Fest —<br>Instagram from Zero</h2>
+        <p>When LLDC's annual cultural festival needed a social presence that matched its ambition, I built it. Full Instagram strategy — content planning, reel direction, grid aesthetic, and community management.</p>
+        <p>One reel hit <strong style="color:var(--teal)">98.9K views</strong>. Organic. No paid promotion.</p>
+        <div class="dss">
+          <div class="ds"><div class="dv">98.9K</div><div class="dl">Top Reel Views</div></div>
+          <div class="ds"><div class="dv">14.8K</div><div class="dl">2nd Best Reel</div></div>
+          <div class="ds"><div class="dv">7.1K</div><div class="dl">Meet Reel</div></div>
+          <div class="ds"><div class="dv">6.4K</div><div class="dl">Teaser Reel</div></div>
         </div>
-        <p style="margin-top:1.2rem; font-size:.85rem; color:rgba(255,255,255,.5);">@drishti_lldcoc — Organic growth, no paid promotion.</p>
       </div>
-      <div class="drishti-img-frame reveal">
-        <img src="assets/drishti-grid.jpg" alt="Drishti Instagram Grid — @drishti_lldcoc" loading="lazy" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── THINKING LAB ───────────────────────────────────── -->
-<section id="thinking">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div class="section-label">Thinking Lab</div>
-    <h2>How I break down <em style="color:var(--teal)">campaigns.</em></h2>
-    <div class="tl-grid">
-      <div class="tl-card reveal">
-        <div class="tl-tag">Observation</div>
-        <h4>Why Most Brand Social Fails Before It's Posted</h4>
-        <p>The problem isn't the content. It's that nobody agreed on what the content is supposed to do. A post without an objective is just decoration.</p>
-      </div>
-      <div class="tl-card reveal">
-        <div class="tl-tag">Campaign Breakdown</div>
-        <h4>Naturals NOW: Making Process the Product</h4>
-        <p>Live churning isn't a feature — it's a content engine. The lesson: when you have something genuinely visible and differentiated, the strategy is to not hide it behind polish.</p>
-      </div>
-      <div class="tl-card reveal">
-        <div class="tl-tag">Strategic Note</div>
-        <h4>The Problem With "Authentic" Founder Content</h4>
-        <p>Most founder content fails because it performs authenticity without the actual stakes. The best founder posts — like EDT's LUMA motor story — give you a decision, not a personality.</p>
+      <div class="dimg rvr">
+        <img src="assets/drishti-grid.jpg" alt="Drishti Instagram Reel Grid @drishti_lldcoc" loading="lazy"/>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── SKILLS ─────────────────────────────────────────── -->
-<section id="skills" style="background:var(--white);">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div class="section-label">Skills</div>
+<!-- SKILLS -->
+<section id="skills" class="sec">
+  <div class="si">
+    <div class="sl">Skills</div>
     <h2>Proof, not a list.</h2>
-    <div class="skills-grid">
-      <div class="skill-card reveal">
-        <div class="skill-cat">Content Strategy</div>
-        <div class="skill-statement">Built structured, multi-pillar content systems for brand accounts with 40+ monthly posts across Instagram, Facebook, and LinkedIn.</div>
-        <div class="skill-proof">↳ Forestkraft — 35% organic reach increase</div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-cat">Social Media Execution</div>
-        <div class="skill-statement">Managed full Instagram operations — grid planning, reel ideation, community management, and influencer brief coordination.</div>
-        <div class="skill-proof">↳ Drishti Fest — 98.9K views, zero paid promotion</div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-cat">Campaign Planning</div>
-        <div class="skill-statement">Designed 90-day go-to-market strategies with activation calendars, KPI targets, influencer tiers, and PR press angles.</div>
-        <div class="skill-proof">↳ Naturals NOW — full launch blueprint</div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-cat">Brand Positioning</div>
-        <div class="skill-statement">Translated technical product differentiators into cultural narratives — content buckets, founder themes, and creator briefs that build brand equity over time.</div>
-        <div class="skill-proof">↳ EDT LUMA — 5 buckets, 5 creators, 3 founder arcs</div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-cat">Analytics & Tools</div>
-        <div class="skill-statement">Meta Business Suite, Google Analytics, Facebook Ads Manager, SEO tools, Canva — used for performance tracking and creative production, not just reporting.</div>
-        <div class="skill-proof">↳ Consistent measurement across all roles</div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-cat">Copywriting</div>
-        <div class="skill-statement">Write for engagement, not just information — hooks, captions, strategy documents, and campaign narratives that respect the reader's attention.</div>
-        <div class="skill-proof">↳ 98%+ accuracy — JoshTalks English Transcription</div>
-      </div>
+    <div class="skgrid">
+      <div class="skc rv"><div class="scat">Content Strategy</div><div class="sstmt">Built structured, multi-pillar content systems with 40+ monthly posts across Instagram, Facebook, and LinkedIn.</div><div class="sproof">↳ 35% organic reach increase at Forestkraft</div><div class="sbar"><div class="sb" data-w="90"></div></div></div>
+      <div class="skc rv" style="transition-delay:.08s"><div class="scat">Social Media Execution</div><div class="sstmt">Full Instagram ops — grid planning, reel ideation, community management, influencer brief coordination.</div><div class="sproof">↳ Drishti Fest — 98.9K views, zero paid promotion</div><div class="sbar"><div class="sb" data-w="95"></div></div></div>
+      <div class="skc rv" style="transition-delay:.16s"><div class="scat">Campaign Planning</div><div class="sstmt">90-day go-to-market strategies with activation calendars, KPI targets, influencer tiers, and PR angles.</div><div class="sproof">↳ Naturals NOW full launch blueprint</div><div class="sbar"><div class="sb" data-w="85"></div></div></div>
+      <div class="skc rv" style="transition-delay:.24s"><div class="scat">Brand Positioning</div><div class="sstmt">Technical differentiators translated into cultural narratives — buckets, founder themes, creator briefs.</div><div class="sproof">↳ EDT LUMA — 5 buckets, 5 creators, 3 founder arcs</div><div class="sbar"><div class="sb" data-w="88"></div></div></div>
+      <div class="skc rv" style="transition-delay:.32s"><div class="scat">Analytics & Tools</div><div class="sstmt">Meta Business Suite, Google Analytics, Facebook Ads Manager, SEO tools — for decisions, not just reporting.</div><div class="sproof">↳ Consistent measurement across all roles</div><div class="sbar"><div class="sb" data-w="80"></div></div></div>
+      <div class="skc rv" style="transition-delay:.4s"><div class="scat">Copywriting</div><div class="sstmt">Hooks, captions, strategy documents, and campaign narratives that respect the reader's attention.</div><div class="sproof">↳ 98%+ accuracy — JoshTalks transcription</div><div class="sbar"><div class="sb" data-w="92"></div></div></div>
     </div>
   </div>
 </section>
 
-<!-- ── SIDE QUESTS ────────────────────────────────────── -->
-<section id="sidequests">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div class="section-label">Side Quests</div>
+<!-- SIDE QUESTS -->
+<section id="sq" class="sec">
+  <div class="si">
+    <div class="sl">Side Quests</div>
     <h2>Beyond the brief.</h2>
-    <p style="max-width:520px; margin-bottom:2rem;">The things I do because I can't help it. These say as much about how I think as any campaign.</p>
-    <div class="sq-grid">
-
-      <div class="sq-card reveal">
-        <div class="sq-icon">🎬</div>
-        <h3>Nijaat — Short Film Screenplay</h3>
-        <p>Written for Mumbai University's short film competition. A story about a survivor reclaiming her life post-trauma, told through character, dialogue, and scene direction. Because storytelling is strategy with feeling — and I've always written.</p>
-        <a href="assets/nijaat-screenplay.pdf" target="_blank" class="view-doc-btn" style="font-size:.8rem; padding:.6rem 1.2rem;">Read Screenplay →</a>
-      </div>
-
-      <div class="sq-card reveal">
-        <div class="sq-icon">📝</div>
-        <h3>English Transcription — JoshTalks</h3>
-        <p>Freelance content editor with Josh Talks, maintaining 98%+ accuracy across high-volume English transcriptions. Precision, patience, and an ear for language — the exact same muscles that make good copy.</p>
-        <a href="assets/joshatks-cert.pdf" target="_blank" class="view-doc-btn" style="font-size:.8rem; padding:.6rem 1.2rem;">View Certificate →</a>
-      </div>
-
+    <p style="max-width:440px;color:var(--muted);margin:.6rem 0 2rem;font-size:.9rem;line-height:1.7">The things I do because I can't help it. These say as much about how I think as any campaign deck.</p>
+    <div class="sqg">
+      <div class="sqc rv"><div class="sqic">🎬</div><h3>Nijaat — Short Film Screenplay</h3><p>Written for Mumbai University's short film competition. A story about a survivor reclaiming her life — told through character, dialogue, and careful scene direction. Because storytelling is strategy with feeling.</p><a href="assets/nijaat-screenplay.pdf" target="_blank" class="dbtn" style="font-size:.78rem;padding:.62rem 1.3rem">Read Screenplay →</a></div>
+      <div class="sqc rv" style="transition-delay:.1s"><div class="sqic">📝</div><h3>English Transcription — JoshTalks</h3><p>Freelance content editor with Josh Talks, maintaining 98%+ accuracy across high-volume English transcriptions. Precision, patience, and an ear for language — the same muscles that make good copy.</p><a href="assets/joshatks-cert.pdf" target="_blank" class="dbtn" style="font-size:.78rem;padding:.62rem 1.3rem">View Certificate →</a></div>
     </div>
   </div>
 </section>
 
-<!-- ── RESUME ──────────────────────────────────────────── -->
+<!-- THINKING -->
+<section id="thinking" class="sec">
+  <div class="si">
+    <div class="sl">Thinking Lab</div>
+    <h2>How I break down <em style="color:var(--teal)">campaigns.</em></h2>
+    <div class="tlg">
+      <div class="tlc rv"><div class="tlt">Observation</div><h4>Why Most Brand Social Fails Before It's Posted</h4><p>The problem isn't the content. It's that nobody agreed on what the content is supposed to do. A post without an objective is just decoration.</p></div>
+      <div class="tlc rv" style="transition-delay:.1s"><div class="tlt">Campaign Breakdown</div><h4>Naturals NOW: Making Process the Product</h4><p>Live churning isn't a feature — it's a content engine. When you have something genuinely visible and differentiated, don't hide it behind polish.</p></div>
+      <div class="tlc rv" style="transition-delay:.2s"><div class="tlt">Strategic Note</div><h4>The Problem With "Authentic" Founder Content</h4><p>Most founder content fails because it performs authenticity without actual stakes. The best founder posts give you a decision, not a personality.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
 <section id="resume">
-  <div class="resume-inner">
-    <div class="section-label" style="justify-content:center;">Resume</div>
+  <div class="ri">
+    <div class="sl" style="justify-content:center">Resume</div>
     <h2>The full picture.</h2>
     <p>3 years of marketing experience across digital strategy, content operations, B2B coordination, and brand work — with a BMS in Marketing from Mumbai University.</p>
-    <a href="assets/resume.pdf" download class="btn-primary" style="display:inline-flex; margin:0 auto;">Download Resume</a>
+    <a href="assets/resume.pdf" download class="bmag bp" style="display:inline-flex;margin:0 auto">Download Resume ↓</a>
   </div>
 </section>
 
-<!-- ── FINAL CTA ───────────────────────────────────────── -->
+<!-- CONTACT -->
 <section id="contact">
-  <div class="section-label" style="justify-content:center; color:var(--teal);">Let's Talk</div>
-  <h2>Got a brand that needs<br>a sharper point of view?</h2>
-  <p>I'm open to marketing roles, strategy projects, and interesting briefs. If you're building something and need someone who thinks in systems and writes in clarity — let's talk.</p>
-  <div class="contact-ctas">
-    <a href="mailto:pallavibalmiki.work@gmail.com" class="btn-teal">Send an Email</a>
-    <a href="https://www.linkedin.com/in/pallavi-balmiki/" target="_blank" class="btn-outline-white">LinkedIn →</a>
+  <div class="sl" style="justify-content:center;color:rgba(58,125,124,.8)">Let's Talk</div>
+  <h2>Got a brief that needs<br>a sharper point of view?</h2>
+  <p class="cp">Open to marketing roles, strategy projects, and interesting problems. If you're building something and need someone who thinks in systems and writes with clarity — let's talk.</p>
+  <div class="cbtns">
+    <a href="mailto:pallavibalmiki.work@gmail.com" class="bteal">Send an Email ✦</a>
+    <a href="https://www.linkedin.com/in/pallavi-balmiki/" target="_blank" class="bwh">LinkedIn →</a>
   </div>
-  <div class="contact-info">
-    <span>📧 <a href="mailto:pallavibalmiki.work@gmail.com">pallavibalmiki.work@gmail.com</a></span>
-    <span>📞 <a href="tel:+919372943680">9372943680</a></span>
-    <span>📍 Mumbai, Maharashtra</span>
+  <div class="cdet">
+    <div class="cdi">📧 <button class="ceml" onclick="copyEmail()">pallavibalmiki.work@gmail.com ↗</button></div>
+    <div class="cdi">📞 <a href="tel:+919372943680">9372943680</a></div>
+    <div class="cdi">📍 Mumbai, Maharashtra</div>
   </div>
 </section>
 
-<!-- ── FOOTER ──────────────────────────────────────────── -->
-<footer>
-  <p>© 2025 Pallavi Balmiki. Built with intention.</p>
-</footer>
+<footer><p>© 2025 Pallavi Balmiki &nbsp;·&nbsp; Built with intention, not a template.</p></footer>
 
 <script>
-  // Navbar scroll
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 30);
+/* CURSOR */
+const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.wcard,.mc,.skc,.tlc,.sqc,.mpill,.ds').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cg'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cg'));
+});
+
+/* PROGRESS + NAV */
+window.addEventListener('scroll',()=>{
+  document.getElementById('pbar').style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';
+  document.getElementById('nav').classList.toggle('s',scrollY>30);
+});
+
+/* HAMBURGER */
+document.getElementById('ham').onclick=()=>document.getElementById('nl').classList.toggle('open');
+document.querySelectorAll('.nlinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nl').classList.remove('open')));
+
+/* TYPEWRITER */
+const words=['act.','remember.','feel something.','pay attention.','convert.'];
+let wi=0,ci=0,del=false,tw=document.getElementById('tw');
+function type(){
+  const w=words[wi];
+  tw.textContent=del?w.slice(0,ci--):w.slice(0,ci++);
+  if(!del&&ci>w.length){return setTimeout(()=>{del=true;setTimeout(type,80)},1400)}
+  if(del&&ci<0){del=false;wi=(wi+1)%words.length;return setTimeout(type,400)}
+  setTimeout(type,del?55:95);
+}
+type();
+
+/* REVEAL */
+const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');ro.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>ro.observe(el));
+
+/* COUNTER */
+function animCount(el){
+  if(el.dataset.display)return;
+  const t=+el.dataset.target,dur=1400,step=16,steps=dur/step;
+  let c=0,s=0;
+  const iv=setInterval(()=>{
+    s++;c=Math.round(t*(s/steps));
+    el.textContent=t>=1000?(c/1000).toFixed(1)+'K':c;
+    if(s>=steps){el.textContent=t>=1000?(t/1000)+'K':t;clearInterval(iv)}
+  },step);
+}
+const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){animCount(e.target);co.unobserve(e.target)}})},{threshold:.4});
+document.querySelectorAll('.counter').forEach(el=>co.observe(el));
+
+/* SKILL BARS */
+const bo=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.width=e.target.dataset.w+'%';bo.unobserve(e.target)}})},{threshold:.4});
+document.querySelectorAll('.sb').forEach(b=>bo.observe(b));
+
+/* CARD TILT */
+document.querySelectorAll('.wcard').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`perspective(900px) rotateY(${x*9}deg) rotateX(${-y*6}deg) translateY(-5px)`;
   });
+  card.addEventListener('mouseleave',()=>card.style.transform='');
+});
 
-  // Hamburger
-  function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('open');
-  }
-  document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => {
-    document.getElementById('navLinks').classList.remove('open');
-  }));
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
+/* COPY EMAIL */
+function copyEmail(){
+  navigator.clipboard.writeText('pallavibalmiki.work@gmail.com').then(()=>{
+    const t=document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2200);
+  });
+}
 </script>
 </body>
 </html>
